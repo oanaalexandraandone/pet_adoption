@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>
+    you did it
+</h1>
+
+<p th:text=" 'id:' + ${centerForm.getID()}"/>
+<p th:text=" 'name:' + ${centerForm.name}"/>
+<p th:text=" 'city:' + ${centerForm.city}"/>
+<p th:text=" 'street:' + ${centerForm.street}"/>
+<p th:text=" 'telephone:' + ${centerForm.telephone}"/>
+<p th:text=" 'password:' + ${centerForm.password}"/>
+<p th:text=" 'second pass:' + ${centerForm.confirmPassword}"/>
+</body>
+</html>

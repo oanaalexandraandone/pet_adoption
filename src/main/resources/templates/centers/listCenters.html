@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Centers</title>
+</head>
+<body>
+
+<table id="centers" class="table table-striped">
+    <thead>
+    <tr>
+        <th style="width: 150px;">Name</th>
+        <th style="width: 200px;">Address</th>
+        <th>City</th>
+        <th style="width: 120px">Telephone</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="center : ${selections}">
+        <td>
+            <a th:href="@{/centers/__${center.ID}__}" th:text="${center.name}"></a></a>
+        </td>
+        <td th:text="${center.street}"/>
+        <td th:text="${center.city}"/>
+        <td th:text="${center.telephone}"/>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

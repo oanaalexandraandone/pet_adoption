@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Pets for adoption</h1>
+
+<table>
+    <thead>
+    <tr>
+        <th style="width: 150px;">Name</th>
+        <th style="width: 200px;">Type</th>
+        <th style="width: 200px;">Date of Birth</th>
+        <th style="width: 200px;">Center Name</th>
+        <th>City</th>
+        <th style="width: 120px">Telephone</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="pet : ${selections}" th:object="${pet}" >
+        <td>
+            <a th:href="@{/pet/__${pet.ID}__}" th:text="${pet.name}"></a></a>
+        </td>
+        <td th:text="${pet.petType}"/>
+        <td th:date="${pet.dob}"/>
+        <td th:text="${pet.center.city}"/>
+        <td th:text="${pet.center.telephone}"/>
+
+    </tr>
+    </tbody>
+</table>
+
+
+
+    <div class="row" th:each="pet : ${selections}" th:object="${pet}">
+        <div class="column" style="background-color:#aaa;">
+            <p>Name</p>
+            <p>Type</p>
+            <p>Date of birth</p>
+            <p>Center</p>
+            <p>City</p>
+            <p>Telephone</p>
+        </div>
+        <div class="column" style="background-color:#bbb;">
+            <p ><a th:href="@{/pet/__${pet.ID}__}" th:text="${pet.name}"></a></a></p>
+            <p th:text="${pet.petType}"></p>
+            <p th:date="${pet.dob}"></p>
+            <p th:text="${pet.center.name}"></p>
+            <p th:text="${pet.center.city}"></p>
+            <p th:text="${pet.center.telephone}"></p>
+        </div>
+    </div>
+
+
+</body>
+</html>

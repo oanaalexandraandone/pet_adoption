@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>"${pet.NAME}"</title>
+</head>
+<body>
+
+<br />
+<br />
+<h2>Pets</h2>
+<table th:object="${pet}" th:action="@{/pets/{petID}}">
+    <tbody>
+   <tr>
+        <td th:text="*{name}"  colspan="2" align="center" >Name</td>
+    </tr>
+  <tr>
+        <td style="width: 43px;">Date of birth</td>
+        <td th:text="*{dob}">&nbsp;</td>
+    </tr>
+    <tr>
+        <td >Type</td>
+        <td th:text="*{petType.name}">&nbsp;</td>
+    </tr>
+    <tr>
+        <td >Story</td>
+        <td th:text="*{description}">&nbsp;</td>
+    </tr>
+    </tbody>
+    <div th:if="*{image != null}" class="col-md-6">
+        <img
+             th:src="@{'/pets/' + *{ID} + '/PetPicture'}"
+             width="200" height="200">
+    </div>
+
+    <form th:action="@{'/pets/' + *{ID} + '/pictures'}" enctype="multipart/form-data" method="post">
+        <label class="control-label">Select Picture</label>
+        <input id="image" name="image" type="file" class="file">
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+
+    <tr th:if="${#authorization.getAuthentication().principal}" sec:authorize="isAuthenticated()" >
+        <form action="/pets/delete" method="post">
+            <p><input name ="delete" type="submit" value="Delete Pet" />
+        </form>
+    </tr>
+</table>
+
+<div sec:authorize="isAuthenticated()">
+    <a href ="/pets/new">Add new pet</a>
+</div>
+<div sec:authorize="isAnonymous()">
+    <a th:href="@{/login}">Log in</a>
+</div>
+
+</body>
+</html>

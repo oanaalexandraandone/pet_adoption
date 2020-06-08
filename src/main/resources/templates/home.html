@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome to ADOPT  A PET</title>
+
+
+   <script>
+       function filterSearch() {
+           let input, filter, table, div, cityName, i, txtValue;
+           input = document.getElementById("myInput");
+           filter = input.value.toUpperCase();
+           div = document.getElementById("divID");
+           table=div.getElementsByTagName("table")
+           for (i = 0; i < table.length; i++) {
+               cityName = table[i].getElementsByTagName("td")[9];
+               txtValue = cityName.textContent || cityName.innerText;
+               if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                   table[i].style.display = "";
+               } else {
+                   table[i].style.display = "none";
+               }
+           }
+       }
+
+       function filterType() {
+
+       }
+
+   </script>
+
+
+</head>
+<body>
+
+
+<h2>Pets</h2>
+<div align="right">
+    <div sec:authorize="isAnonymous()">
+        <a th:href="@{/login}">Log in</a>
+    </div>
+    <div sec:authorize="isAnonymous()">
+        <a th:href="@{/centers/register}">Register your organization</a>
+    </div>
+    <div sec:authorize="isAuthenticated()">
+        <a th:text="Hello +', ' + ${#authorization.getAuthentication().principal.name}">Hello</a>
+    </div>
+    <div sec:authorize="isAuthenticated()">
+        <a th:href="@{/logout}">Logout</a>
+    </div>
+    <div>
+        <a th:href ="@{/centers/all}">Centers</a>
+    </div>
+    <div sec:authorize="isAuthenticated()">
+        <a href ="/pets/new">Add new pet</a>
+    </div>
+    <div sec:authorize="isAuthenticated()">
+        <a th:href="@{/centers/changePassword}">Change password</a>
+    </div>
+    <div sec:authorize="isAuthenticated()">
+        <a th:href="@{/centers/delete}">Delete account</a>
+    </div>
+
+</div>
+
+<input type="text" id="myInput" onkeyup="filterSearch()" placeholder="Search for names..">
+<div id="divID">
+<table id="pettabel" th:each="pet : ${pets}">
+    <tbody>
+    <tr>
+        <td th:text="${pet.name}"  >Name</td>
+    </tr>
+    <tr>
+        <td style="width: 43px;">dob</td>
+        <td th:text="${pet.dob}">&nbsp;</td>
+    </tr>
+    <tr>
+        <td >type</td>
+        <td th:text="${pet.petType.name}">&nbsp;</td>
+    </tr>
+    <tr>
+        <td >STORY</td>
+        <td th:text="${pet.description}">&nbsp;</td>
+    </tr>
+    <tr>
+        <td >Center</td>
+        <td th:text="${pet.center.name}">&nbsp;</td>
+        <td th:text="${pet.center.city}" id="city">&nbsp;</td>
+        <td th:text="${pet.center.telephone}">&nbsp;</td>
+    </tr>
+    <div th:if="${pet.image != null}" class="col-md-6">
+        <img th:src="@{'/pets/' + ${pet.ID} + '/PetPicture'}"
+             width="200" height="200">
+    </div>
+
+    </tbody>
+</table>
+    <br>
+</div>
+
+
+
+</body>
+</html>
